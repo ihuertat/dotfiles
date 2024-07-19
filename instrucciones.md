@@ -32,7 +32,7 @@ cd .oh-my-zsh/custom/plugins/
 git clone https://github.com/zsh-users/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git
 ```
-agregar al archivo `.zshrc`````, lo siguiente en el apartado plugins.
+agregar al archivo `.zshrc`, lo siguiente en el apartado plugins.
 
 ```
 plugins=(
@@ -46,7 +46,7 @@ plugins=(
 
 Lo primero es instalar una fuente de [NerdFonts](https://www.nerdfonts.com/), probé con FiraCode pero no me gustó, dejaremos JetBrainsMono.
 
-para sistemas ubuntu, ejecutar:
+para sistemas ubuntu, ejecutar el comando completo:
 
 ```
 wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip \
@@ -56,16 +56,17 @@ wget -P ~/.local/share/fonts https://github.com/ryanoasis/nerd-fonts/releases/do
 && fc-cache -fv
 ```
 
-Es necesario instalar el paquete *eza* para tener una versión mejorada de *ls*
+Es necesario instalar el paquete *eza* para tener una versión mejorada de *ls*, así como *bat*, una versión mejorada de *cat*, la cual en ubuntu se encuentra en ejecutable como *batcat*.
 
 ```
-sudo apt install eza
+sudo apt install eza bat
 ```
 
 y definir los alias correspondientes en el archivo `.zshrc`
 
 ```
 alias ls="eza --icons --color=always --group-directories-first"
+alias cat="batcat"
 ```
 
 
@@ -83,8 +84,28 @@ Y agregamos al final del archivo `.zshrc` lo siguiente:
 
 ```
 eval "$(starship init zsh)"
+eval "$(ssh-agent -s)"
 ```
 
+Para activar *starship*, así como el agente de *ssh* para la conexión con *Github*.
+
+Agregar en `.zshrc` :
+
+```
+# archivos de figuras de cowsay en un arreglo
+vacas=(`ls /usr/share/cowsay/cows`)
+# total de figuras encontradas (elementos en el arreglo)
+TVACAS=${#vacas[*]}
+# selecciona un numero al azar entre 0 y TVACAS
+NVACA=$((RANDOM%$TVACAS))
+# nombre del archivo cowsay a utilizar
+vaca=${vacas[$NVACA]}
+export PATH=$PATH:$HOME/.local/share/pipx/venvs/qmk/bin
+# forma el saludo con fortune y cowsay
+neofetch
+fortune | cowsay -f $vaca
+
+```
 
 
 
